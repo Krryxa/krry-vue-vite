@@ -20,46 +20,11 @@ interface imgOptions {
   y: number
 }
 
-const createImgBase = (options: imgOptions): string => {
-  const canvas = document.createElement('canvas')
-  const text = options.content
-  // 因为要实现文字交错效果，所以这里生成两倍宽度的图片
-  canvas.width = options.width * 2
-  canvas.height = options.height
+const createWatermark = (options?: imgOptions): string => {
+  const canvas: HTMLCanvasElement = document.createElement('canvas')
+  canvas.width = 880
+  canvas.height = 400
   const ctx = canvas.getContext('2d')
-  if (ctx) {
-    // X轴阴影距离，负值表示往上，正值表示往下
-    ctx.shadowOffsetX = 2
-    // Y轴阴影距离，负值表示往左，正值表示往右
-    ctx.shadowOffsetY = 2
-    // 阴影的模糊程度
-    ctx.shadowBlur = 2
-    ctx.font = options.font
-    ctx.fillStyle = options.color
-    ctx.rotate(options.rotateDegree)
-    ctx.textAlign = 'left'
-    ctx.fillText(text, options.x, options.y)
-  }
-  return canvas.toDataURL('image/png')
-}
-
-// const str = createImgBase({
-//   width: 340,
-//   height: 240,
-//   content: '水印',
-//   font: '14px PingFang SC, sans-serif',
-//   color: 'rgba(156, 162, 169, 0.3)',
-//   rotateDegree: (-14 * Math.PI) / 180,
-//   x: 400,
-//   y: 340
-// })
-// console.log(str)
-
-onMounted(() => {
-  const canvasDom: HTMLCanvasElement = document.createElement('canvas')
-  canvasDom.width = 880
-  canvasDom.height = 400
-  const ctx = canvasDom.getContext('2d')
   if (ctx) {
     ctx.font = '60px PingFang SC'
     ctx.fillStyle = 'rgba(156, 162, 169, 0.3)'
@@ -67,17 +32,22 @@ onMounted(() => {
     ctx.fillText('krryguo', 40, 200)
     ctx.fillText('krryguo', 350, 555)
   }
-  const imgStr = canvasDom.toDataURL('image/png')
+  return canvas.toDataURL('image/png')
+}
 
-  const waterDom = document.getElementsByClassName(
-    'water-mark'
-  )[0] as HTMLElement
-  waterDom.style.background = `url(${imgStr})`
+const setWatermarkClass = (url: string, className: string): void => {
+  const style = document.createElement('style')
+  style.innerHTML = `.${className} {background-image: url(${url});}`
+  document.head.appendChild(style)
+}
+
+onMounted(() => {
+  setWatermarkClass(createWatermark(), 'my-water-mark')
 })
 </script>
 
 <template>
-  <div class="water-mark">首页</div>
+  <div class="water-mark my-water-mark">首页</div>
 </template>
 
 <style lang="scss" scoped>
