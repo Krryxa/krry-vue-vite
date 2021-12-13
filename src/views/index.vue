@@ -1,36 +1,50 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 // 配置类型定义
-interface imgOptions {
+interface WatermarkOptions {
   // 宽度
-  width: number
+  width?: number
   // 高度
-  height: number
+  height?: number
   // 水印内容
-  content: string
+  content?: string
   // 水印字体
-  font: string
+  font?: string
   // 水印颜色
-  color: string
-  // 偏转角度（deg）
-  rotateDegree: number
+  color?: string
+  // 偏转角度
+  degree?: number
   // X轴偏移量
-  x: number
+  x1?: number
   // Y轴偏移量
-  y: number
+  y1?: number
+  x2?: number
+  // Y轴偏移量
+  y2?: number
 }
 
-const createWatermark = (options?: imgOptions): string => {
+const createWatermark = ({
+  width = 880,
+  height = 400,
+  content = 'krryguo',
+  font = '60px PingFang SC',
+  color = 'rgba(156, 162, 169, 0.3)',
+  degree = -23,
+  x1 = 40,
+  y1 = 200,
+  x2 = 350,
+  y2 = 556
+}: WatermarkOptions): string => {
   const canvas: HTMLCanvasElement = document.createElement('canvas')
-  canvas.width = 880
-  canvas.height = 400
+  canvas.width = width
+  canvas.height = height
   const ctx = canvas.getContext('2d')
   if (ctx) {
-    ctx.font = '60px PingFang SC'
-    ctx.fillStyle = 'rgba(156, 162, 169, 0.3)'
-    ctx.rotate(-0.4)
-    ctx.fillText('krryguo', 40, 200)
-    ctx.fillText('krryguo', 350, 555)
+    ctx.font = font
+    ctx.fillStyle = color
+    ctx.rotate((degree * Math.PI) / 180)
+    ctx.fillText(content, x1, y1)
+    ctx.fillText(content, x2, y2)
   }
   return canvas.toDataURL('image/png')
 }
@@ -42,7 +56,12 @@ const setWatermarkClass = (url: string, className: string): void => {
 }
 
 onMounted(() => {
-  setWatermarkClass(createWatermark(), 'my-water-mark')
+  setWatermarkClass(
+    createWatermark({
+      content: '版权所有'
+    }),
+    'my-water-mark'
+  )
 })
 </script>
 
