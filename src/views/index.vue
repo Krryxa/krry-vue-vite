@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-// 配置类型定义
+
 interface WatermarkOptions {
   // 宽度
   width?: number
@@ -14,12 +14,10 @@ interface WatermarkOptions {
   color?: string
   // 偏转角度
   degree?: number
-  // X轴偏移量
+  // 偏移量
   x1?: number
-  // Y轴偏移量
   y1?: number
   x2?: number
-  // Y轴偏移量
   y2?: number
 }
 
@@ -58,7 +56,7 @@ const setWatermarkClass = (url: string, className: string): void => {
 onMounted(() => {
   setWatermarkClass(
     createWatermark({
-      content: '版权所有'
+      content: 'krryblog'
     }),
     'my-water-mark'
   )
