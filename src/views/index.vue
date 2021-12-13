@@ -56,24 +56,18 @@ const createImgBase = (options: imgOptions): string => {
 // console.log(str)
 
 onMounted(() => {
-  const canvas = document.createElement('canvas')
-  canvas.width = 840
-  canvas.height = 400
-  const ctx = canvas.getContext('2d')
+  const canvasDom: HTMLCanvasElement = document.createElement('canvas')
+  canvasDom.width = 880
+  canvasDom.height = 400
+  const ctx = canvasDom.getContext('2d')
   if (ctx) {
-    // X轴阴影距离，负值表示往上，正值表示往下
-    ctx.shadowOffsetX = 2
-    // Y轴阴影距离，负值表示往左，正值表示往右
-    ctx.shadowOffsetY = 2
-    // 阴影的模糊程度
-    ctx.shadowBlur = 2
-    ctx.font = '60px PingFang SC, sans-serif'
+    ctx.font = '60px PingFang SC'
     ctx.fillStyle = 'rgba(156, 162, 169, 0.3)'
     ctx.rotate(-0.4)
     ctx.fillText('krryguo', 40, 200)
-    ctx.fillText('krryguo', 350, 550)
+    ctx.fillText('krryguo', 350, 555)
   }
-  const imgStr = canvas.toDataURL('image/png')
+  const imgStr = canvasDom.toDataURL('image/png')
 
   const waterDom = document.getElementsByClassName(
     'water-mark'
@@ -90,5 +84,8 @@ onMounted(() => {
 .water-mark {
   width: 100%;
   height: 1600px;
+  line-height: 600px;
+  font-size: 50px;
+  color: #f16d71;
 }
 </style>
