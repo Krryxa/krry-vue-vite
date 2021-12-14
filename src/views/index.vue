@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
+import waterUrl from '@/assets/water.jpeg'
 
 interface WatermarkOptions {
   // 宽度
@@ -53,18 +54,80 @@ const setWatermarkClass = (url: string, className: string): void => {
   document.head.appendChild(style)
 }
 
-onMounted(() => {
+// https://ainyi.com/upload/2021/12/13/974f1fd2-04ba-48df-abcf-6d51a3b8fd98.jpeg
+
+const createImgWatermark = async (
+  {
+    url = '',
+    textAlign = 'center',
+    textBaseline = 'middle',
+    font = '30px PingFang SC',
+    fillStyle = '#fff',
+    x = 120,
+    y = 50,
+    position = 'top-start'
+  },
+  content: string = '这是水印'
+) => {
+  const canvas: HTMLCanvasElement = document.createElement('canvas')
+  const img = new Image()
+  img.src = url
+  img.setAttribute('crossOrigin', 'Anonymous')
+  return new Promise((resolve) => {
+    img.onload = () => {
+      canvas.width = img.width
+      canvas.height = img.height
+      const ctx = canvas.getContext('2d')
+      if (ctx) {
+        ctx.drawImage(img, 0, 0)
+        ctx.textAlign = textAlign
+        ctx.textBaseline = textBaseline
+        ctx.font = font
+        ctx.fillStyle = fillStyle
+        switch (position) {
+          case 'top-end':
+            x = img.width - x
+            break
+          case 'bottom-start':
+            y = img.height - y
+            break
+          case 'bottom-end':
+            x = img.width - x
+            y = img.height - y
+            break
+        }
+        ctx.fillText(content, x, y)
+      }
+      resolve(canvas.toDataURL())
+    }
+  })
+}
+
+const setImgWatermark = (url: string, dom: HTMLImageElement) => {
+  dom.src = url
+}
+
+onMounted(async () => {
   setWatermarkClass(
     createWatermark({
       content: 'krryblog'
     }),
     'my-water-mark'
   )
+  const url = await createImgWatermark({
+    url: waterUrl,
+    font: '50px PingFang SC',
+    x: 160,
+    y: 70,
+    position: 'bottom-end'
+  })
+  setImgWatermark(url, document.querySelector('img') as HTMLImageElement)
 })
 </script>
 
 <template>
   <div class="water-mark my-water-mark">首页</div>
+  <img width="600" />
 </template>
 
 <style lang="scss" scoped>
@@ -74,5 +137,8 @@ onMounted(() => {
   line-height: 600px;
   font-size: 50px;
   color: #f16d71;
+}
+img {
+  margin-bottom: 200px;
 }
 </style>
