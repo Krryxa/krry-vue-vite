@@ -125,15 +125,7 @@ onMounted(async () => {
   addListioner('my-water-mark')
 })
 
-// 监听器添加
-const addObserve = (mutation: MutationObserver, container: Element) => {
-  mutation.observe(container, {
-    // 只监听属性
-    attributes: true
-  })
-}
-
-// 防止删除类名
+// 添加监听器
 const addListioner = (className: string) => {
   const MutationObserver =
     window.MutationObserver || window.WebKitMutationObserver
@@ -144,17 +136,24 @@ const addListioner = (className: string) => {
         // 监听所在的元素类名集合
         const classList = container.classList
         if (![classList].includes(className)) {
-          // 如果 classList 中不存在水印的类名，就重新 add
+          // 如果 classList 中不存在水印的类名，就重新添加
           container.classList.add(className)
-          // 防止重复触发
+          // 防止重新触发监听器
           monitor.disconnect()
-          // 重新开始观察
+          // 然后再重新开始观察
           addObserve(monitor, container)
         }
       })
       addObserve(monitor, container)
     })
   }
+}
+// 开启观察
+const addObserve = (mutation: MutationObserver, container: Element) => {
+  mutation.observe(container, {
+    // 只监听属性
+    attributes: true
+  })
 }
 </script>
 
