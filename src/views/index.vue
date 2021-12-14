@@ -122,7 +122,40 @@ onMounted(async () => {
     position: 'bottom-end'
   })
   setImgWatermark(url, document.querySelector('img') as HTMLImageElement)
+  addListioner('my-water-mark')
 })
+
+// 监听器添加
+const addObserve = (mutation: MutationObserver, container: Element) => {
+  mutation.observe(container, {
+    // 只监听属性
+    attributes: true
+  })
+}
+
+// 防止删除类名
+const addListioner = (className: string) => {
+  const MutationObserver =
+    window.MutationObserver || window.WebKitMutationObserver
+  const containerList = document.querySelectorAll(`.${className}`)
+  if (MutationObserver) {
+    containerList.forEach((container) => {
+      let monitor = new MutationObserver(() => {
+        // 监听所在的元素类名集合
+        const classList = container.classList
+        if (![classList].includes(className)) {
+          // 如果 classList 中不存在水印的类名，就重新 add
+          container.classList.add(className)
+          // 防止重复触发
+          monitor.disconnect()
+          // 重新开始观察
+          addObserve(monitor, container)
+        }
+      })
+      addObserve(monitor, container)
+    })
+  }
+}
 </script>
 
 <template>
