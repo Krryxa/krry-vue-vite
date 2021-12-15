@@ -166,7 +166,6 @@ const addListioner = (className: string, style?: StyleType) => {
           // 获取 class 集合
           const classList: DOMTokenList = container.classList
           if (!Object.values(classList).includes(className)) {
-            // ['water-mark', 'my-water-mark']
             // 如果 classList 中不存在水印的类名，就重新添加
             container.classList.add(className)
             flag = true
