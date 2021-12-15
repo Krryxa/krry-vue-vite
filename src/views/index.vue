@@ -114,44 +114,47 @@ onMounted(async () => {
     }),
     'my-water-mark'
   )
-  const url = await createImgWatermark({
+  const url = (await createImgWatermark({
     url: waterUrl,
     font: '50px PingFang SC',
     x: 160,
     y: 70,
     position: 'bottom-end'
-  })
+  })) as string
   setImgWatermark(url, document.querySelector('img') as HTMLImageElement)
   addListioner('my-water-mark')
 })
 
 // 添加监听器
 const addListioner = (className: string) => {
-  const MutationObserver =
-    window.MutationObserver || window.WebKitMutationObserver
+  const MutationObserver = window.MutationObserver
+  // 获取所有添加了水印类名的 dom
   const containerList = document.querySelectorAll(`.${className}`)
   if (MutationObserver) {
-    containerList.forEach((container) => {
-      let monitor = new MutationObserver(() => {
-        // 监听所在的元素类名集合
-        const classList = container.classList
-        if (![classList].includes(className)) {
+    containerList.forEach((container: Element) => {
+      // 每个元素监听
+      const observer = new MutationObserver(() => {
+        // 获取 class 集合
+        const classList: DOMTokenList = container.classList
+        if (!Object.values(classList).includes(className)) {
+          // ['water-mark', 'my-water-mark']
           // 如果 classList 中不存在水印的类名，就重新添加
           container.classList.add(className)
-          // 防止重新触发监听器
-          monitor.disconnect()
+          // 暂停监听，防止上面的 add 操作又触发监听器
+          observer.disconnect()
           // 然后再重新开始观察
-          addObserve(monitor, container)
+          addObserve(observer, container)
         }
       })
-      addObserve(monitor, container)
+      // 每个元素开启观察
+      addObserve(observer, container)
     })
   }
 }
 // 开启观察
 const addObserve = (mutation: MutationObserver, container: Element) => {
   mutation.observe(container, {
-    // 只监听属性
+    // 观察器的配置，需要观察属性的变动
     attributes: true
   })
 }
