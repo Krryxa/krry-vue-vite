@@ -153,6 +153,8 @@ const addListioner = (className: string, style?: StyleType) => {
       const observer = new MutationObserver(() => {
         let flag = false // 触发改变的标识
         if (style) {
+          // style 属性渲染水印
+          // 获取 style 属性
           const styleAttribute: CSSStyleDeclaration = container.style
           if (
             !styleAttribute[style.key] ||
@@ -163,6 +165,7 @@ const addListioner = (className: string, style?: StyleType) => {
             flag = true
           }
         } else {
+          // class 类名渲染水印
           // 获取 class 集合
           const classList: DOMTokenList = container.classList
           if (!Object.values(classList).includes(className)) {
@@ -193,7 +196,7 @@ const addObserve = (mutation: MutationObserver, container: Element) => {
 </script>
 
 <template>
-  <div class="water-mark my-water-mark">使用 class 渲染的水印</div>
+  <div class="water-mark my-water-mark">使用 class 类名渲染的水印</div>
   <div class="water-mark-style">使用 style 渲染的水印</div>
   <img width="600" />
 </template>
