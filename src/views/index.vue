@@ -123,10 +123,11 @@ onMounted(async () => {
 
   // 使用 style 属性渲染水印
   const dom = document.querySelector('.water-mark-style') as HTMLElement
-  dom.style.backgroundImage = `url(${bgUrl})`
+  // 设置样式优先级最高
+  dom.style.setProperty('background-image', `url(${bgUrl})`, 'important')
   addListioner('water-mark-style', {
-    key: 'backgroundImage',
-    value: `url(${bgUrl})`
+    key: 'background-image',
+    value: `url("${bgUrl}")` // js 获取的样式属性值 url 里面加了 ""，所以这里加上来比对是否相同
   })
 
   // 添加图片水印
@@ -155,13 +156,14 @@ const addListioner = (className: string, style?: StyleType) => {
         if (style) {
           // style 属性渲染水印
           // 获取 style 属性
-          const styleAttribute: CSSStyleDeclaration = container.style
+          const styleCss: CSSStyleDeclaration = container.style
           if (
-            !styleAttribute[style.key] ||
-            styleAttribute[style.key] !== style.value
+            !styleCss.getPropertyValue(style.key) ||
+            styleCss.getPropertyValue(style.key) !== style.value ||
+            styleCss.getPropertyPriority(style.key) !== 'important'
           ) {
             // 重新设置样式
-            container.style[style.key] = style.value
+            styleCss.setProperty(style.key, style.value, 'important')
             flag = true
           }
         } else {
