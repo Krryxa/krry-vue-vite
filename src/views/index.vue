@@ -22,6 +22,11 @@ interface WatermarkOptions {
   y2?: number
 }
 
+interface StyleType {
+  key: string
+  value: string
+}
+
 const createWatermark = ({
   width = 880,
   height = 400,
@@ -108,12 +113,23 @@ const setImgWatermark = (url: string, dom: HTMLImageElement) => {
 }
 
 onMounted(async () => {
-  setWatermarkClass(
-    createWatermark({
-      content: 'krryblog'
-    }),
-    'my-water-mark'
-  )
+  const bgUrl = createWatermark({
+    content: 'krryblog'
+  })
+  // 使用 class 渲染水印
+  setWatermarkClass(bgUrl, 'my-water-mark')
+  // 添加监听
+  addListioner('my-water-mark')
+
+  // 使用 style 属性渲染水印
+  const dom = document.querySelector('.water-mark-style') as HTMLElement
+  dom.style.backgroundImage = `url(${bgUrl})`
+  addListioner('water-mark-style', {
+    key: 'backgroundImage',
+    value: `url(${bgUrl})`
+  })
+
+  // 添加图片水印
   const url = (await createImgWatermark({
     url: waterUrl,
     font: '50px PingFang SC',
@@ -122,25 +138,42 @@ onMounted(async () => {
     position: 'bottom-end'
   })) as string
   setImgWatermark(url, document.querySelector('img') as HTMLImageElement)
-  addListioner('my-water-mark')
 })
 
 // 添加监听器
-const addListioner = (className: string) => {
+const addListioner = (className: string, style?: StyleType) => {
   const MutationObserver = window.MutationObserver
   // 获取所有添加了水印类名的 dom
-  const containerList = document.querySelectorAll(`.${className}`)
+  const containerList: NodeListOf<HTMLElement> = document.querySelectorAll(
+    `.${className}`
+  )
   if (MutationObserver) {
-    containerList.forEach((container: Element) => {
+    containerList.forEach((container: HTMLElement) => {
       // 每个元素监听
       const observer = new MutationObserver(() => {
-        // 获取 class 集合
-        const classList: DOMTokenList = container.classList
-        if (!Object.values(classList).includes(className)) {
-          // ['water-mark', 'my-water-mark']
-          // 如果 classList 中不存在水印的类名，就重新添加
-          container.classList.add(className)
-          // 暂停监听，防止上面的 add 操作又触发监听器
+        let flag = false // 触发改变的标识
+        if (style) {
+          const styleAttribute: CSSStyleDeclaration = container.style
+          if (
+            !styleAttribute[style.key] ||
+            styleAttribute[style.key] !== style.value
+          ) {
+            // 重新设置样式
+            container.style[style.key] = style.value
+            flag = true
+          }
+        } else {
+          // 获取 class 集合
+          const classList: DOMTokenList = container.classList
+          if (!Object.values(classList).includes(className)) {
+            // ['water-mark', 'my-water-mark']
+            // 如果 classList 中不存在水印的类名，就重新添加
+            container.classList.add(className)
+            flag = true
+          }
+        }
+        if (flag) {
+          // 暂停监听，防止上面的操作又触发监听器
           observer.disconnect()
           // 然后再重新开始观察
           addObserve(observer, container)
@@ -161,17 +194,20 @@ const addObserve = (mutation: MutationObserver, container: Element) => {
 </script>
 
 <template>
-  <div class="water-mark my-water-mark">首页</div>
+  <div class="water-mark my-water-mark">使用 class 渲染的水印</div>
+  <div class="water-mark-style">使用 style 渲染的水印</div>
   <img width="600" />
 </template>
 
 <style lang="scss" scoped>
-.water-mark {
+.water-mark,
+.water-mark-style {
   width: 100%;
-  height: 1600px;
+  height: 600px;
   line-height: 600px;
   font-size: 50px;
   color: #f16d71;
+  margin-bottom: 100px;
 }
 img {
   margin-bottom: 200px;
