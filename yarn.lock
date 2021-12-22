@@ -716,6 +716,11 @@ vite@^2.7.1:
   optionalDependencies:
     fsevents "~2.3.2"
 
+vue-draggable-next@^2.1.1:
+  version "2.1.1"
+  resolved "http://r.tnpm.oa.com/vue-draggable-next/-/vue-draggable-next-2.1.1.tgz#49886da82f116d11b3e4df7674320fdacf5d7e04"
+  integrity sha512-f5lmA7t6LMaL4viR7dU30zzvqJzaKQs0ymL0Jy9UDT9uiZ2tXF3MzPzEvpTH2UODXZJkT+SnjeV1fXHMsgXLYA==
+
 vue-router@^4.0.12:
   version "4.0.12"
   resolved "http://r.tnpm.oa.com/vue-router/-/vue-router-4.0.12.tgz#8dc792cddf5bb1abcc3908f9064136de7e13c460"
