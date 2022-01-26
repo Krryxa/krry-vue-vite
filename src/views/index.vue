@@ -28,16 +28,16 @@ interface StyleType {
 }
 
 const createWatermark = ({
-  width = 880,
-  height = 400,
+  width = 1100,
+  height = 500,
   content = 'krryguo',
   font = '60px PingFang SC',
   color = 'rgba(156, 162, 169, 0.3)',
   degree = -23,
-  x1 = 40,
-  y1 = 200,
-  x2 = 350,
-  y2 = 556
+  x1 = 0,
+  y1 = 220,
+  x2 = 400,
+  y2 = 670
 }: WatermarkOptions): string => {
   const canvas: HTMLCanvasElement = document.createElement('canvas')
   canvas.width = width
@@ -112,14 +112,28 @@ const setImgWatermark = (url: string, dom: HTMLImageElement) => {
   dom.src = url
 }
 
+const setWatermark = (options: WatermarkOptions, className: string) => {
+  const bgUrl = createWatermark(options)
+  // 使用 class 渲染水印
+  setWatermarkClass(bgUrl, className)
+  // 添加监听
+  addListioner(className)
+}
+
 onMounted(async () => {
   const bgUrl = createWatermark({
     content: 'krryblog'
   })
   // 使用 class 渲染水印
-  setWatermarkClass(bgUrl, 'my-water-mark')
-  // 添加监听
-  addListioner('my-water-mark')
+  setWatermark(
+    {
+      content: 'krryblog'
+    },
+    'my-water-mark'
+  )
+  // setWatermarkClass(bgUrl, 'my-water-mark')
+  // // 添加监听
+  // addListioner('my-water-mark')
 
   // 使用 style 属性渲染水印
   const dom = document.querySelector('.water-mark-style') as HTMLElement
@@ -207,7 +221,7 @@ const addObserve = (mutation: MutationObserver, container: Element) => {
 .water-mark,
 .water-mark-style {
   width: 100%;
-  height: 600px;
+  height: 1000px;
   line-height: 600px;
   font-size: 50px;
   color: #f16d71;
