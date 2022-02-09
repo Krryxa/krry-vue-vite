@@ -13,6 +13,7 @@ export const useBlogStore = defineStore('blog', () => {
   const name = ref('krryblog')
   const list = ref([{ id: 1, name: '默认博客', content: '' }])
 
+  // getters 类似计算属性，因此采用 computed
   const getName = computed(() => `输出 ${name.value}`)
 
   // 使用其他 store
