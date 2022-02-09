@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useMusicStore } from '@/store/music'
 import { useBlogStore } from '@/store/blog'
 
@@ -19,6 +20,8 @@ const addList = (flag: boolean) => {
         content: ''
       })
 }
+
+const { list, name } = storeToRefs(blogStore)
 </script>
 
 <template>
