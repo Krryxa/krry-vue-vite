@@ -22,6 +22,18 @@ const addList = (flag: boolean) => {
 }
 
 const { list, name } = storeToRefs(blogStore)
+
+blogStore.$subscribe((mutation, state) => {
+  // import { MutationType } from 'pinia'
+  console.log(mutation.type) // 'direct' | 'patch object' | 'patch function'
+  // same as blogStore.$id
+  console.log(mutation.storeId) // 'blog'
+  // only available with mutation.type === 'patch object'
+  // patch object passed to blogStore.$patch()
+  mutation.type === 'patch object' && console.log(mutation.payload)
+
+  console.log('改变的 state：', state)
+})
 </script>
 
 <template>
