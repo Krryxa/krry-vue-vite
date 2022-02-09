@@ -15,6 +15,7 @@ export const useBlogStore = defineStore('blog', () => {
 
   const getName = computed(() => `输出 ${name.value}`)
 
+  // 使用其他 store
   const musicStore = useMusicStore()
   const getMixMusicName = computed(
     () => `输出 ${name.value} ${musicStore.name}`
