@@ -10,6 +10,11 @@ const routes = [
     path: '/drag',
     name: 'drag',
     component: () => import('@/views/drag.vue')
+  },
+  {
+    path: '/pinia',
+    name: 'pinia',
+    component: () => import('@/views/pinia.vue')
   }
 ]
 
