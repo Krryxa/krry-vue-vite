@@ -2,7 +2,7 @@
 import { ref, Ref, computed } from 'vue'
 
 const giftList: Ref<any> = ref({
-  买口红: { rate: 0.05, select: true },
+  买口红: { rate: 0.05, select: false },
   买包包: { rate: 0.05, select: false },
   再来一次: { rate: 0.3, select: false },
   买衣服: { rate: 0.09, select: false },
@@ -14,13 +14,23 @@ const giftList: Ref<any> = ref({
 })
 
 const giftNameList = computed(() => Object.keys(giftList.value))
+const selecting = ref(false)
 
 const start = () => {
-  startChange(0, 2, 3)
+  selecting.value = true
+  startChange(0, 2, 5, 1, () => {
+    alert('买包包')
+  })
 }
 
-// 参数 min：从第几个开始；max 最终停留的；count 循环几轮
-const startChange = (min: number, max: number, count: number) => {
+// 参数 min：从第几个开始；max 最终停留的；count 循环几轮；time 时间增速；callback：回调函数
+const startChange = (
+  min: number,
+  max: number,
+  count: number,
+  time: number,
+  callback: any
+) => {
   let index = 0
   for (let key in giftList.value) {
     if (index !== 4) {
@@ -39,7 +49,14 @@ const startChange = (min: number, max: number, count: number) => {
     min === 3 ? (min += 2) : min++
   }
   if (min < max || count !== 1) {
-    setTimeout(startChange.bind(null, min, max, count), 200)
+    time += 0.6
+    const timeOut = 10 * time
+    setTimeout(
+      startChange.bind(null, min, max, count, time, callback),
+      timeOut > 200 ? 200 : timeOut
+    )
+  } else {
+    setTimeout(callback, 100)
   }
 }
 </script>
@@ -54,7 +71,8 @@ const startChange = (min: number, max: number, count: number) => {
       :key="ele"
     >
       <div class="btn" v-if="ele === 'btn'">
-        <button @click="start">{{ giftList[ele] }}</button>
+        <button v-if="!selecting" @click="start">{{ giftList[ele] }}</button>
+        <span v-else>抽奖中...</span>
       </div>
       <div class="content">{{ ele }}</div>
     </div>
@@ -80,6 +98,7 @@ const startChange = (min: number, max: number, count: number) => {
       border-color: red;
     }
     .btn {
+      color: #000;
     }
   }
 }
