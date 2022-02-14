@@ -15,6 +15,11 @@ const routes = [
     path: '/pinia',
     name: 'pinia',
     component: () => import('@/views/pinia.vue')
+  },
+  {
+    path: '/love',
+    name: 'love',
+    component: () => import('@/views/love.vue')
   }
 ]
 
