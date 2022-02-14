@@ -2,24 +2,51 @@
 import { ref, Ref, computed } from 'vue'
 
 const giftList: Ref<any> = ref({
-  买口红: { rate: 0.05, select: false },
-  买包包: { rate: 0.05, select: false },
-  再来一次: { rate: 0.3, select: false },
-  买衣服: { rate: 0.09, select: false },
+  买口红: { rate: 0.025, select: false, index: 1 },
+  买包包: { rate: 0.025, select: false, index: 2 },
+  再来一次: { rate: 0.3, select: false, index: 3 },
+  买衣服: { rate: 0.09, select: false, index: 4 },
   btn: '开始抽奖',
-  谢谢抽奖: { rate: 0.1, select: false },
-  抱一下: { rate: 0.2, select: false },
-  亲一口: { rate: 0.2, select: false },
-  有求必应: { rate: 0.01, select: false }
+  谢谢抽奖: { rate: 0.1, select: false, index: 6 },
+  抱一下: { rate: 0.225, select: false, index: 7 },
+  亲一口: { rate: 0.225, select: false, index: 8 },
+  有求必应: { rate: 0.01, select: false, index: 9 }
 })
 
 const giftNameList = computed(() => Object.keys(giftList.value))
 const selecting = ref(false)
 
+const rangeGiftList = computed(() => {
+  const rangeList = []
+  let min = 0
+  for (let key in giftList.value) {
+    if (key === 'btn') continue
+    const max = min + giftList.value[key].rate
+    rangeList.push({
+      min,
+      max,
+      index: giftList.value[key].index,
+      gift: key
+    })
+    min = max
+  }
+  return rangeList
+})
+
 const start = () => {
   selecting.value = true
-  startChange(0, 2, 5, 1, () => {
-    alert('买包包')
+  // Math.random() 方法返回大于等于 0 小于 1 的一个随机数
+  const target = Math.random() || 1 // 这样处理是返回 > 0，<= 1 的数
+  let selectIndex = 6
+  let gift = '谢谢抽奖'
+  for (const val of rangeGiftList.value) {
+    if (target > val.min && target <= val.max) {
+      selectIndex = val.index
+      gift = val.gift
+    }
+  }
+  startChange(0, selectIndex, 2, 1, () => {
+    alert(gift)
     giftList.value.btn = '再抽一次'
     selecting.value = false
   })
