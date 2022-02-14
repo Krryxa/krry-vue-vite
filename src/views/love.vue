@@ -2,14 +2,14 @@
 import { ref, Ref, computed } from 'vue'
 
 const giftList: Ref<any> = ref({
-  买口红: { rate: 0.025, select: false, index: 1 },
-  买包包: { rate: 0.025, select: false, index: 2 },
+  买口红: { rate: 0.03, select: false, index: 1 },
+  买包包: { rate: 0.03, select: false, index: 2 },
   再来一次: { rate: 0.3, select: false, index: 3 },
   买衣服: { rate: 0.09, select: false, index: 4 },
   btn: '开始抽奖',
   谢谢抽奖: { rate: 0.1, select: false, index: 6 },
-  抱一下: { rate: 0.225, select: false, index: 7 },
-  亲一口: { rate: 0.225, select: false, index: 8 },
+  抱一下: { rate: 0.3, select: false, index: 7 },
+  亲一口: { rate: 0.3, select: false, index: 8 },
   有求必应: { rate: 0.01, select: false, index: 9 }
 })
 
@@ -35,8 +35,11 @@ const rangeGiftList = computed(() => {
 
 const start = () => {
   selecting.value = true
+  // 最大值
+  const maxRangeSize = rangeGiftList.value[rangeGiftList.value.length - 1].max
   // Math.random() 方法返回大于等于 0 小于 1 的一个随机数
-  const target = Math.random() || 1 // 这样处理是返回 > 0，<= 1 的数
+  // const target = Math.random() || 1 // 这样处理是返回 > 0，<= 1 的数
+  const target = Math.random() * maxRangeSize || maxRangeSize // 这样处理是返回 > 0，<= maxRangeSize 的数
   let selectIndex = 6
   let gift = '谢谢抽奖'
   for (const val of rangeGiftList.value) {
