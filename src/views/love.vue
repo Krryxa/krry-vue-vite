@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, Ref, computed } from 'vue'
+import { ElMessageBox } from 'element-plus'
 
 const giftList: Ref<any> = ref({
   买口红: { rate: 0.05, select: false, index: 1 },
@@ -48,8 +49,10 @@ const start = () => {
       gift = val.gift
     }
   }
-  startChange(0, selectIndex, 2, 1, () => {
-    alert(gift)
+  startChange(0, selectIndex, 5, 1, () => {
+    ElMessageBox.alert(`哇哦！你抽到了${gift}`, '奖品公示', {
+      confirmButtonText: 'OK'
+    })
     giftList.value.btn = '再抽一次'
     selecting.value = false
   })
