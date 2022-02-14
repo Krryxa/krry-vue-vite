@@ -6,7 +6,7 @@ const giftList: Ref<any> = ref({
   买包包: { rate: 0.05, select: false },
   再来一次: { rate: 0.3, select: false },
   买衣服: { rate: 0.09, select: false },
-  btn: '抽奖',
+  btn: '开始抽奖',
   谢谢抽奖: { rate: 0.1, select: false },
   抱一下: { rate: 0.2, select: false },
   亲一口: { rate: 0.2, select: false },
@@ -20,6 +20,8 @@ const start = () => {
   selecting.value = true
   startChange(0, 2, 5, 1, () => {
     alert('买包包')
+    giftList.value.btn = '再抽一次'
+    selecting.value = false
   })
 }
 
