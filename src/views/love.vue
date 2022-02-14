@@ -92,7 +92,7 @@ const startChange = (
 
 <template>
   <h1>情人节</h1>
-  <p>祝你情人节快乐！！快来选礼物吧~</p>
+  <p>祝老婆情人节快乐！！快来选礼物吧~</p>
   <div class="gift-container">
     <div
       :class="['gift-container__single', { selected: giftList[ele].select }]"
