@@ -2,12 +2,12 @@
 import { ref, Ref, computed } from 'vue'
 
 const giftList: Ref<any> = ref({
-  买口红: { rate: 0.03, select: false, index: 1 },
-  买包包: { rate: 0.03, select: false, index: 2 },
+  买口红: { rate: 0.05, select: false, index: 1 },
+  买包包: { rate: 0.05, select: false, index: 2 },
   再来一次: { rate: 0.3, select: false, index: 3 },
   买衣服: { rate: 0.09, select: false, index: 4 },
   btn: '开始抽奖',
-  谢谢抽奖: { rate: 0.1, select: false, index: 6 },
+  谢谢抽奖: { rate: 0.3, select: false, index: 6 },
   抱一下: { rate: 0.3, select: false, index: 7 },
   亲一口: { rate: 0.3, select: false, index: 8 },
   有求必应: { rate: 0.01, select: false, index: 9 }
