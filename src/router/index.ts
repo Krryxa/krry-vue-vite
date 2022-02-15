@@ -1,4 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {
+  createRouter,
+  createWebHistory,
+  createWebHashHistory
+} from 'vue-router'
 
 const routes = [
   {
@@ -27,7 +31,8 @@ const routes = [
   }
 ]
 
+// 由于生产环境小项目很多，同一台机器没有配置 404 都指向 index.html，所以这里判断生产环境就用 hash 路由
 export default createRouter({
-  history: createWebHistory(),
+  history: import.meta.env.PROD ? createWebHashHistory() : createWebHistory(),
   routes
 })
