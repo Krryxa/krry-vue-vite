@@ -3,15 +3,15 @@ import { ref, Ref, computed } from 'vue'
 import { ElMessageBox } from 'element-plus'
 
 const giftList: Ref<any> = ref({
-  买口红: { rate: 0.05, select: false, index: 1, order: 0 }, // index：目标停留位置；order：flex布局子元素顺序
-  买包包: { rate: 0.05, select: false, index: 2, order: 1 },
-  再来一次: { rate: 0.3, select: false, index: 3, order: 2 },
-  买衣服: { rate: 0.09, select: false, index: 4, order: 5 },
+  买口红: { rate: 0.05, select: false, order: 0 }, // order：flex布局子元素顺序
+  买包包: { rate: 0.05, select: false, order: 1 },
+  再来一次: { rate: 0.3, select: false, order: 2 },
+  买衣服: { rate: 0.09, select: false, order: 5 },
   btn: { text: '开始抽奖', order: 4 },
-  谢谢抽奖: { rate: 0.3, select: false, index: 6, order: 8 },
-  抱一下: { rate: 0.3, select: false, index: 7, order: 7 },
-  亲一口: { rate: 0.3, select: false, index: 8, order: 6 },
-  有求必应: { rate: 0.01, select: false, index: 9, order: 3 }
+  谢谢抽奖: { rate: 0.3, select: false, order: 8 },
+  抱一下: { rate: 0.3, select: false, order: 7 },
+  亲一口: { rate: 0.3, select: false, order: 6 },
+  有求必应: { rate: 0.01, select: false, order: 3 }
 })
 
 const giftNameList = computed(() => Object.keys(giftList.value))
@@ -20,13 +20,15 @@ const selecting = ref(false)
 const rangeGiftList = computed(() => {
   const rangeList = []
   let min = 0
+  let index = 0 // index 是当前位置，选中时 index 的值
   for (let key in giftList.value) {
+    index++
     if (key === 'btn') continue
     const max = min + giftList.value[key].rate
     rangeList.push({
       min,
       max,
-      index: giftList.value[key].index,
+      index, // 从 1 开始
       gift: key
     })
     min = max
@@ -45,8 +47,10 @@ const start = () => {
   let gift = '谢谢抽奖'
   for (const val of rangeGiftList.value) {
     if (target > val.min && target <= val.max) {
+      console.log(val)
       selectIndex = val.index
       gift = val.gift
+      break
     }
   }
   startChange(0, selectIndex, 5, 1, () => {
@@ -66,22 +70,22 @@ const startChange = (
   time: number,
   callback: any
 ) => {
+  if (min === 9) {
+    // 一轮了
+    count--
+    min = 1
+  } else {
+    min === 4 ? (min += 2) : min++
+  }
   let index = 0
   for (let key in giftList.value) {
     if (index !== 4) {
       giftList.value[key].select = false
-      if (index === min) {
+      if (index === min - 1) {
         giftList.value[key].select = true
       }
     }
     index++
-  }
-  if (min === 9) {
-    // 一轮了
-    count--
-    min = 0
-  } else {
-    min === 3 ? (min += 2) : min++
   }
   if (min < max || count !== 1) {
     time += 0.6
