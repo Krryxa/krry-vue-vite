@@ -3,7 +3,7 @@ import { ref, Ref, computed } from 'vue'
 import { ElMessageBox } from 'element-plus'
 
 const giftList: Ref<any> = ref({
-  买口红: { rate: 0.05, select: false, index: 1, order: 0 },
+  买口红: { rate: 0.05, select: false, index: 1, order: 0 }, // index：目标停留位置；order：flex布局子元素顺序
   买包包: { rate: 0.05, select: false, index: 2, order: 1 },
   再来一次: { rate: 0.3, select: false, index: 3, order: 2 },
   买衣服: { rate: 0.09, select: false, index: 4, order: 5 },
@@ -76,7 +76,7 @@ const startChange = (
     }
     index++
   }
-  if (min === 8) {
+  if (min === 9) {
     // 一轮了
     count--
     min = 0
