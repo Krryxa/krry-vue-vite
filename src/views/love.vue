@@ -3,15 +3,15 @@ import { ref, Ref, computed } from 'vue'
 import { ElMessageBox } from 'element-plus'
 
 const giftList: Ref<any> = ref({
-  买口红: { rate: 0.05, select: false, index: 1 },
-  买包包: { rate: 0.05, select: false, index: 2 },
-  再来一次: { rate: 0.3, select: false, index: 3 },
-  买衣服: { rate: 0.09, select: false, index: 4 },
-  btn: '开始抽奖',
-  谢谢抽奖: { rate: 0.3, select: false, index: 6 },
-  抱一下: { rate: 0.3, select: false, index: 7 },
-  亲一口: { rate: 0.3, select: false, index: 8 },
-  有求必应: { rate: 0.01, select: false, index: 9 }
+  买口红: { rate: 0.05, select: false, index: 1, order: 0 },
+  买包包: { rate: 0.05, select: false, index: 2, order: 1 },
+  再来一次: { rate: 0.3, select: false, index: 3, order: 2 },
+  买衣服: { rate: 0.09, select: false, index: 4, order: 5 },
+  btn: { text: '开始抽奖', order: 4 },
+  谢谢抽奖: { rate: 0.3, select: false, index: 6, order: 8 },
+  抱一下: { rate: 0.3, select: false, index: 7, order: 7 },
+  亲一口: { rate: 0.3, select: false, index: 8, order: 6 },
+  有求必应: { rate: 0.01, select: false, index: 9, order: 3 }
 })
 
 const giftNameList = computed(() => Object.keys(giftList.value))
@@ -53,7 +53,7 @@ const start = () => {
     ElMessageBox.alert(`哇哦！你抽到了${gift}`, '奖品公示', {
       confirmButtonText: 'OK'
     })
-    giftList.value.btn = '再抽一次'
+    giftList.value.btn.text = '再抽一次'
     selecting.value = false
   })
 }
@@ -102,11 +102,14 @@ const startChange = (
   <div class="gift-container">
     <div
       :class="['gift-container__single', { selected: giftList[ele].select }]"
+      :style="{ order: giftList[ele].order }"
       v-for="ele in giftNameList"
       :key="ele"
     >
       <div class="btn" v-if="ele === 'btn'">
-        <button v-if="!selecting" @click="start">{{ giftList[ele] }}</button>
+        <button v-if="!selecting" @click="start">
+          {{ giftList[ele].text }}
+        </button>
         <span v-else>抽奖中...</span>
       </div>
       <div class="content">{{ ele }}</div>
