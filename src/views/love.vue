@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, Ref, computed } from 'vue'
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox, ElButton } from 'element-plus'
 
 const giftList: Ref<any> = ref({
   买口红: { rate: 0.05, select: false, order: 0 }, // order：flex布局子元素顺序
@@ -111,9 +111,9 @@ const startChange = (
       :key="ele"
     >
       <div class="btn" v-if="ele === 'btn'">
-        <button v-if="!selecting" @click="start">
+        <el-button v-if="!selecting" @click="start">
           {{ giftList[ele].text }}
-        </button>
+        </el-button>
         <span v-else>抽奖中...</span>
       </div>
       <div class="content">{{ ele }}</div>
