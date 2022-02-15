@@ -54,9 +54,13 @@ const start = () => {
     }
   }
   startChange(0, selectIndex, 5, 1, () => {
-    ElMessageBox.alert(`哇哦！你抽到了${gift}`, '奖品公示', {
-      confirmButtonText: 'OK'
-    })
+    if (isMobile()) {
+      alert(`哇哦！你抽到了${gift}`)
+    } else {
+      ElMessageBox.alert(`哇哦！你抽到了${gift}`, '奖品公示', {
+        confirmButtonText: 'OK'
+      })
+    }
     giftList.value.btn.text = '再抽一次'
     selecting.value = false
   })
@@ -98,6 +102,18 @@ const startChange = (
     setTimeout(callback, 100)
   }
 }
+
+const isMobile = () => {
+  if (
+    /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i.test(
+      navigator.userAgent
+    )
+  ) {
+    return true // 移动端
+  } else {
+    return false // PC端
+  }
+}
 </script>
 
 <template>
@@ -123,7 +139,7 @@ const startChange = (
 
 <style lang="scss" scoped>
 .gift-container {
-  width: 606px;
+  width: 612px;
   margin: 60px auto;
   display: flex;
   flex-wrap: wrap;
@@ -131,16 +147,29 @@ const startChange = (
     height: 200px;
     width: 200px;
     line-height: 200px;
-    border: 1px solid transparent;
+    border: 2px solid transparent;
     color: #fff;
+    overflow: hidden;
     .content {
       background: #92d1ff;
     }
     &.selected {
-      border-color: red;
+      border-color: #ff5a5a;
     }
     .btn {
       color: #000;
+    }
+  }
+}
+@media screen and (max-width: 780px) {
+  .gift-container {
+    width: 24.2rem;
+    &__single {
+      height: 7.8em;
+      width: 7.8rem;
+      line-height: 7.8rem;
+      border: 0.13rem solid transparent;
+      color: #fff;
     }
   }
 }
