@@ -45,7 +45,8 @@ const selectedList = ref([
   color: #fff;
   margin: 10px;
   &__child {
-    background: #ff9898;
+    background: #82adff;
+    border: 1px solid #fff;
   }
 }
 </style>

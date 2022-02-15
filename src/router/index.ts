@@ -2,9 +2,13 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   {
-    path: '/home',
-    name: 'home',
+    path: '/',
     component: () => import('@/views/index.vue')
+  },
+  {
+    path: '/watermark',
+    name: 'watermark',
+    component: () => import('@/views/watermark.vue')
   },
   {
     path: '/drag',
