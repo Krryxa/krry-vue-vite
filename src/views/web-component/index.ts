@@ -3,10 +3,11 @@ import LittleSfc from './little-sfc.ce.vue'
 
 const MyVueElement = defineCustomElement({
   props: {
-    info: String
+    info: String,
+    obj: Object
   },
   emits: {},
-  template: `<div class="test">{{ info }}</div>`,
+  template: `<div class="test">{{ info }} - {{ obj.name }}</div>`,
   styles: [`.test { color: red; }`]
 })
 // 注册
