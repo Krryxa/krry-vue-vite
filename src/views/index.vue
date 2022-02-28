@@ -16,6 +16,10 @@ const linkList = ref([
   {
     name: '情人节抽奖',
     link: '/love'
+  },
+  {
+    name: 'web-component',
+    link: '/web-component'
   }
 ])
 </script>
