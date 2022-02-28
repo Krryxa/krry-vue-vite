@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineCustomElement } from 'vue'
+import { ref } from 'vue'
 
 const info = ref('Krry')
 
