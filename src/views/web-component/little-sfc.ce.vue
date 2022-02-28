@@ -16,7 +16,7 @@ defineProps({
 </script>
 
 <template>
-  <h3>我是一个小组件</h3>
+  <h3>我是一个自定义 Web Components</h3>
   <ul>
     <li v-for="ele in list" :key="ele.name">{{ ele.name }}</li>
   </ul>
