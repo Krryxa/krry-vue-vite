@@ -63,7 +63,7 @@ const start = () => {
   })
 }
 
-// 参数 min：从第几个开始；max 最终停留的；count 循环几轮；time 时间增速；callback：回调函数
+// 参数 min：从第几个开始；max 最终停留的；count 循环几轮；time 时间增速；callback：停止时的回调函数
 const startChange = (
   min: number,
   max: number,
