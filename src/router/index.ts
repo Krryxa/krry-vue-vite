@@ -33,6 +33,11 @@ const routes = [
     path: '/web-component',
     name: 'web-component',
     component: () => import('@/views/web-component/web-component.vue')
+  },
+  {
+    path: '/3d-ball',
+    name: '3d-ball',
+    component: () => import('@/views/3d-ball.vue')
   }
 ]
 

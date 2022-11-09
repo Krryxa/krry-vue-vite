@@ -12,6 +12,7 @@ const selectedList = ref([
 
 <template>
   <h1>拖拽排序测试</h1>
+  <h2>黑色区域可以拖拽整体模块排序，模块里的每一项只在自己内部排序</h2>
   <ul>
     <VueDraggableNext v-model="selectedList" handle="li" animation="200">
       <transition-group>

@@ -20,12 +20,16 @@ const linkList = ref([
   {
     name: 'web-component',
     link: '/web-component'
+  },
+  {
+    name: '3D 线条小球',
+    link: '/3d-ball'
   }
 ])
 </script>
 
 <template>
-  <h1>导航</h1>
+  <h1>一些练习</h1>
   <ul>
     <li v-for="ele in linkList" :key="ele.name">
       <router-link :to="ele.link">{{ ele.name }}</router-link>
