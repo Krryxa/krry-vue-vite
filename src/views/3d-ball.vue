@@ -1,3 +1,12 @@
+<script lang="ts" setup>
+import { onMounted, onUnmounted } from 'vue'
+onMounted(() => {
+  document.body.className = 'black'
+})
+onUnmounted(() => {
+  document.body.className = ''
+})
+</script>
 <template>
   <div class="wrap">
     <div class="x">
@@ -116,10 +125,5 @@
       transform: translateZ(-100px);
     }
   }
-}
-</style>
-<style>
-body {
-  background: #000;
 }
 </style>
