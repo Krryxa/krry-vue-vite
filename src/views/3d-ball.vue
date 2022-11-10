@@ -85,7 +85,6 @@ onUnmounted(() => {
     transform: rotateY(90deg);
     position: absolute;
     top: 0;
-    left: 0;
 
     .y-inner {
       @extend %base-inner;
@@ -108,7 +107,6 @@ onUnmounted(() => {
     transform: rotateX(90deg);
     position: absolute;
     top: 0;
-    left: 0;
 
     .z-inner {
       @extend %base-inner;
