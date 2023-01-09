@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 const emit = defineEmits(['update:first', 'update:second'])
 
-// 可写计算属性，当改变 firstVal，就会触发 set 方法
+// 可写计算属性，当改变 firstVal.value，就会触发 set 方法
 const firstVal = computed({
   get: () => props.first,
   set: (val) => emit('update:first', val)
