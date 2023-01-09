@@ -24,6 +24,10 @@ const linkList = ref([
   {
     name: '3D 线条小球',
     link: '/3d-ball'
+  },
+  {
+    name: '自定义组件',
+    link: '/custom-component'
   }
 ])
 </script>

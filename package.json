@@ -20,6 +20,8 @@
     "@vitejs/plugin-vue": "^2.0.0",
     "sass": "^1.45.0",
     "typescript": "^4.5.3",
+    "unplugin-auto-import": "^0.12.1",
+    "unplugin-vue-components": "^0.22.12",
     "vite": "^2.7.1"
   }
 }

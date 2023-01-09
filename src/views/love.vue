@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, Ref, computed } from 'vue'
-import { ElMessageBox, ElButton } from 'element-plus'
 
 const giftList: Ref<any[]> = ref([
   { name: '买口红', rate: 0.05, select: false, order: 0 }, // order：flex布局子元素顺序

@@ -38,6 +38,11 @@ const routes = [
     path: '/3d-ball',
     name: '3d-ball',
     component: () => import('@/views/3d-ball.vue')
+  },
+  {
+    path: '/custom-component',
+    name: 'custom-component',
+    component: () => import('@/views/custom-component/index.vue'),
   }
 ]
 
