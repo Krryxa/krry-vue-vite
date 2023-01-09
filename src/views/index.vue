@@ -33,7 +33,7 @@ const linkList = ref([
 </script>
 
 <template>
-  <h1>一些练习</h1>
+  <h1>Vue3 的一些练习</h1>
   <ul>
     <li v-for="ele in linkList" :key="ele.name">
       <router-link :to="ele.link">{{ ele.name }}</router-link>
@@ -43,9 +43,8 @@ const linkList = ref([
 
 <style lang="scss" scoped>
 ul {
-  padding: 0;
   li {
-    list-style: none;
+    margin: 10px 0;
   }
 }
 </style>

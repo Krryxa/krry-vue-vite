@@ -13,7 +13,7 @@ const selectedList = ref([
 <template>
   <h1>拖拽排序测试</h1>
   <h2>黑色区域可以拖拽整体模块排序，模块里的每一项只在自己内部排序</h2>
-  <ul>
+  <ul class="parent">
     <VueDraggableNext v-model="selectedList" handle="li" animation="200">
       <transition-group>
         <li class="container" v-for="(ele, index) of selectedList" :key="index">
@@ -41,13 +41,28 @@ const selectedList = ref([
 </template>
 
 <style lang="scss" scoped>
-.container {
-  background: #333;
-  color: #fff;
-  margin: 10px;
-  &__child {
-    background: #82adff;
-    border: 1px solid #fff;
+.parent {
+  width: 600px;
+  margin: 0 auto;
+  .container {
+    background: #333;
+    color: #fff;
+    margin: 10px;
+
+    ul {
+      padding-left: 40px;
+
+      & > div {
+        background: #fff;
+      }
+    }
+
+    &__child {
+      background: #82adff;
+      height: 40px;
+      line-height: 40px;
+      margin: 6px 0;
+    }
   }
 }
 </style>
