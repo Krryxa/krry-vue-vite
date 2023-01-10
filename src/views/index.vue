@@ -26,7 +26,7 @@ const linkList = ref([
     link: '/3d-ball'
   },
   {
-    name: '自定义组件',
+    name: '自定义组件 v-model',
     link: '/custom-component'
   }
 ])

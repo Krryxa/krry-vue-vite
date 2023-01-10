@@ -9,7 +9,7 @@ const rightVal = ref('only one')
 </script>
 
 <template>
-  <h1>自定义组件</h1>
+  <h1>自定义组件 v-model</h1>
   <div class="wrap">
     <sub-comp-first name="自定义组件1" v-model="value" />
     <div class="show">绑定值：{{ value }}</div>
