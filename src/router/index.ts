@@ -40,9 +40,14 @@ const routes = [
     component: () => import('@/views/3d-ball.vue')
   },
   {
+    path: '/gsap',
+    name: 'gsap',
+    component: () => import('@/views/gsap.vue')
+  },
+  {
     path: '/custom-component',
     name: 'custom-component',
-    component: () => import('@/views/custom-component/index.vue'),
+    component: () => import('@/views/custom-component/index.vue')
   }
 ]
 

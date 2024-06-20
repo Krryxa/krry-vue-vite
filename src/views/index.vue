@@ -28,6 +28,10 @@ const linkList = ref([
   {
     name: '自定义组件 v-model',
     link: '/custom-component'
+  },
+  {
+    name: 'GSAP 动效',
+    link: '/gsap'
   }
 ])
 </script>
