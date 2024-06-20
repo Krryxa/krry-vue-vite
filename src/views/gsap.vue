@@ -1,6 +1,9 @@
 <script setup lang='ts'>
 import { onMounted } from 'vue';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger)
 
 onMounted(() => {
   gsap.to('.item-1', { x: 350, y: 300, ease: 'bounce.out', duration: 2 })
@@ -40,6 +43,26 @@ onMounted(() => {
     ],
     duration: 1
   }, '<') // 设置执行时间，< 代表与前一个动画一起执行
+
+  // 鼠标滚轮时间线
+  gsap.timeline({
+    scrollTrigger: {
+      // trigger: '.text', // 可以不指定触发器，就以整个浏览器为基准
+      start: 'top top', // 触发器的顶部 滚动条的顶部 开始动画
+      end: '+=2200', // 滚动到 2200px 结束
+      // end: 'bottom bottom',
+      scrub: 1,
+    }
+  }).to('.text p', { backgroundPositionY: 0 })
+
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: '.text-fix',
+      start: '-=400', // 触发器顶部距离400px开始执行
+      end: 'bottom bottom', // 触发器底部 滚动条底部
+      scrub: 1,
+    }
+  }).to('.text-fix p', { backgroundPositionY: 17 })
   
 })
 </script>
@@ -53,6 +76,13 @@ onMounted(() => {
     <section class="rect">
       <div v-for="i in [1,2,3]" :class="['item', `rect-${i}`, `color-${i}`]"></div>
     </section>
+    <h2>往下滑</h2>
+    <div class="text">
+      <p>灵动的 iPhone 新玩法，迎面而来。重大的安全新功能，为拯救生命而设计。创新的 4800 万像素主摄，让细节纤毫毕现。更有 iPhone 芯片中的速度之王，为一切提供强大原动力。</p>
+    </div>
+    <div class="text-fix">
+      <p>灵动的 iPhone 新玩法，迎面而来。重大的安全新功能，为拯救生命而设计。创新的 4800 万像素主摄，让细节纤毫毕现。更有 iPhone 芯片中的速度之王，为一切提供强大原动力。</p>
+    </div>
   </div>
 </template>
 
@@ -122,6 +152,46 @@ $noise-url: url(@/assets/noise.png);
     .item-3 {
       margin-left: 200px;
       margin-top: -50px;
+    }
+  }
+
+  p {
+    margin: 0 auto;
+    padding: 200px 0;
+    width: 600px;
+    text-align: left;
+    font-size: 40px;
+    color: transparent;
+    background: linear-gradient(
+      -4deg,
+      transparent,
+      transparent 25%,
+      #ffb6ff,
+      #b344ff,
+      transparent 75%,
+      transparent
+    );
+    background-clip: text;
+    background-size: 100% 800%;
+    background-position: center 84%;
+  }
+
+  .text {
+    background: #000;
+  }
+
+  .text-fix {
+    display: flex;
+    justify-content: center;
+    height: 2600px;
+    background: #000;
+
+    p {
+      margin: 0;
+      padding: 0;
+      position: sticky;
+      top: 400px;
+      height: fit-content;
     }
   }
 }
