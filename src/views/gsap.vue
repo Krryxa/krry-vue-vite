@@ -35,8 +35,8 @@ onMounted(() => {
     keyframes: [
       { y: 0 },
       { y: 48, scale: 1.5 },
-      { y: -48, delay: 0.25 },
-      { y: 0, scale: 1, delay: 0.25 },
+      { y: -48, delay: 0.5 },
+      { y: 0, scale: 1, delay: 0.5 },
     ],
     duration: 1
   }, '<') // 设置执行时间，< 代表与前一个动画一起执行
