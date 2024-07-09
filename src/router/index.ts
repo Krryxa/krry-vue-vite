@@ -45,6 +45,11 @@ const routes = [
     component: () => import('@/views/gsap.vue')
   },
   {
+    path: '/3D-orillusion',
+    name: '3D-orillusion',
+    component: () => import('@/views/orillusion/index.vue')
+  },
+  {
     path: '/custom-component',
     name: 'custom-component',
     component: () => import('@/views/custom-component/index.vue')

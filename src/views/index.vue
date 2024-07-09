@@ -32,6 +32,10 @@ const linkList = ref([
   {
     name: 'GSAP 动效',
     link: '/gsap'
+  },
+  {
+    name: '3D-orillusion',
+    link: '/3D-orillusion'
   }
 ])
 </script>
