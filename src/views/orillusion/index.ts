@@ -32,7 +32,7 @@ export class K3DTest {
     camera.perspective(60, window.innerWidth / window.innerHeight, 1, 5000.0)
     // 设置相机控制器
     const controller = camera.object3D.addComponent(HoverCameraController)
-    controller.setCamera(45, -30, 15)
+    controller.setCamera(45, -30, 500)
     // 添加相机节点
     scene3D.addChild(cameraObj)
 
@@ -48,6 +48,10 @@ export class K3DTest {
 
     // 添加立方体
     scene3D.addChild(createBox())
+    
+    // 加载模型
+    scene3D.addChild(await loadDuckModel())
+    scene3D.addChild(await loadWukongModel())
 
     // 渲染场景
     // 创建View3D对象
@@ -68,7 +72,7 @@ const createBox = () => {
   // 为对象添 MeshRenderer
   let mr = obj.addComponent(MeshRenderer)
   // 设置几何体
-  mr.geometry = new BoxGeometry(5, 5, 5)
+  mr.geometry = new BoxGeometry(500, 100, 500)
   // 设置材质
   // const mat = new UnLitMaterial()
   // mr.material = mat
@@ -77,4 +81,27 @@ const createBox = () => {
   // mat.baseColor = new Color(1, 0, 0, 0.5)
   mr.material = new LitMaterial()
   return obj
+}
+
+// 小黄鸭模型
+const loadDuckModel = async () => {
+  const data = await Engine3D.res.loadGltf('src/assets/3D/duck/Duck.gltf')
+  // data.x = 100
+  data.y = 45
+  data.scaleX = 0.5
+  data.scaleY = 0.5
+  data.scaleZ = 0.5
+  data.rotationY = -90
+  return data;
+}
+
+// 猴子模型
+const loadWukongModel = async () => {
+  const data = await Engine3D.res.loadGltf('src/assets/3D/wukong/wukong.gltf')
+  data.x = 100
+  data.y = 50
+  data.scaleX = 50
+  data.scaleY = 50
+  data.scaleZ = 50
+  return data
 }
