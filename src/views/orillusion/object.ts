@@ -8,6 +8,7 @@ import {
   BoxGeometry,
   MeshRenderer
 } from '@orillusion/core'
+import { RotateScript } from './script'
 
 // 立方体
 export const createBox = () => {
@@ -24,6 +25,9 @@ export const createBox = () => {
   // mat.blendMode = BlendMode.ALPHA
   // mat.baseColor = new Color(1, 0, 0, 0.5)
   mr.material = new LitMaterial()
+
+  // 把旋转的脚本组件挂载到对象
+  obj.addComponent(RotateScript)
   return obj
 }
 
@@ -36,6 +40,9 @@ export const loadDuckModel = async () => {
   data.scaleY = 0.5
   data.scaleZ = 0.5
   data.rotationY = -90
+
+  // 把旋转的脚本组件挂载到对象
+  data.addComponent(RotateScript)
   return data
 }
 
