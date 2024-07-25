@@ -4,19 +4,13 @@ import {
   Object3D,
   Camera3D,
   View3D,
-  LitMaterial,
-  UnLitMaterial,
-  BlendMode,
-  Color,
-  BoxGeometry,
-  MeshRenderer,
   DirectLight,
   HoverCameraController,
   AtmosphericComponent
 } from '@orillusion/core'
 
 export class K3DTest {
-  async run() {
+  async init() {
     // 初始化引擎
     await Engine3D.init()
     // 场景根节点
@@ -46,13 +40,10 @@ export class K3DTest {
     // 添加光照对象
     scene3D.addChild(light)
 
-    // 添加立方体
-    scene3D.addChild(createBox())
-    
-    // 加载模型
-    scene3D.addChild(await loadDuckModel())
-    scene3D.addChild(await loadWukongModel())
+    return { scene3D, camera }
+  }
 
+  run(scene3D: Scene3D, camera: Camera3D) {
     // 渲染场景
     // 创建View3D对象
     const view = new View3D()
@@ -63,45 +54,4 @@ export class K3DTest {
     // 开始渲染
     Engine3D.startRenderView(view)
   }
-}
-
-// 立方体
-const createBox = () => {
-  // 新建对象
-  const obj = new Object3D()
-  // 为对象添 MeshRenderer
-  let mr = obj.addComponent(MeshRenderer)
-  // 设置几何体
-  mr.geometry = new BoxGeometry(500, 100, 500)
-  // 设置材质
-  // const mat = new UnLitMaterial()
-  // mr.material = mat
-  // mat.transparent = true
-  // mat.blendMode = BlendMode.ALPHA
-  // mat.baseColor = new Color(1, 0, 0, 0.5)
-  mr.material = new LitMaterial()
-  return obj
-}
-
-// 小黄鸭模型
-const loadDuckModel = async () => {
-  const data = await Engine3D.res.loadGltf('src/assets/3D/duck/Duck.gltf')
-  // data.x = 100
-  data.y = 45
-  data.scaleX = 0.5
-  data.scaleY = 0.5
-  data.scaleZ = 0.5
-  data.rotationY = -90
-  return data;
-}
-
-// 猴子模型
-const loadWukongModel = async () => {
-  const data = await Engine3D.res.loadGltf('src/assets/3D/wukong/wukong.gltf')
-  data.x = 100
-  data.y = 50
-  data.scaleX = 50
-  data.scaleY = 50
-  data.scaleZ = 50
-  return data
 }
