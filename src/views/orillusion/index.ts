@@ -17,7 +17,7 @@ export class K3DTest {
     const scene3D = new Scene3D()
 
     // 添加天空盒
-    const sky = scene3D.addComponent(AtmosphericComponent)
+    scene3D.addComponent(AtmosphericComponent)
 
     // 添加摄像机
     const cameraObj = new Object3D()
