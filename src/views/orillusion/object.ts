@@ -33,7 +33,7 @@ export const createBox = () => {
 
 // 小黄鸭模型
 export const loadDuckModel = async () => {
-  const data = await Engine3D.res.loadGltf('src/assets/3D/duck/Duck.gltf')
+  const data = await Engine3D.res.loadGltf('/3D/duck/Duck.gltf')
   // data.x = 100
   data.y = 45
   data.scaleX = 0.5
@@ -48,7 +48,7 @@ export const loadDuckModel = async () => {
 
 // 猴子模型
 export const loadWukongModel = async () => {
-  const data = await Engine3D.res.loadGltf('src/assets/3D/wukong/wukong.gltf')
+  const data = await Engine3D.res.loadGltf('/3D/wukong/wukong.gltf')
   data.x = 100
   data.y = 50
   data.scaleX = 50
